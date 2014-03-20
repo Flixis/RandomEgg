@@ -1,0 +1,7 @@
+name: RandomEgg
+version: V1.2
+main: me.tariqdin.randomegg.RandomEgg
+author: Flixis_
+commands:
+    randomegg:
+        usage: /randomegg
