@@ -23,7 +23,6 @@ public class RandomEgg extends JavaPlugin implements Listener{
 		this.reloadConfig();
 		allowed = getConfig().getStringList("allowed");
 		
-		
 		types = new ArrayList<EntityType>();
 		add(EntityType.BAT);
 		add(EntityType.BLAZE);
@@ -43,7 +42,7 @@ public class RandomEgg extends JavaPlugin implements Listener{
 		add(EntityType.ARROW);
 		add(EntityType.PIG);
 		add(EntityType.VILLAGER);
-     	add(EntityType.SILVERFISH);
+     		add(EntityType.SILVERFISH);
 		add(EntityType.SQUID);
 		add(EntityType.SNOWMAN);
 		add(EntityType.IRON_GOLEM);
@@ -68,27 +67,32 @@ public class RandomEgg extends JavaPlugin implements Listener{
 		Bukkit.getPluginManager().registerEvents(this, this);
 	}
 	
-	Random egg = new Random();
-	
 	
 	@EventHandler
 	public void throwegg(PlayerEggThrowEvent event){
-		int debug = egg.nextInt(types.size());
-		//System.out.println(debug);
-		event.setHatchingType(types.get(debug));
+		Random egg = new Random();
+		int eggType = egg.nextInt(types.size());
+		EntityType entityType = types.get(eggType)
+		if(config.getBoolean("enableDebug", false)){
+			event.getPlayer().sendMessage("[RandomEgg DEBUG] EGG_TYPE: " + eggType + ", ENTITY_TYPE:" + entityType);
+		}
+		event.setHatchingType(entityType);
 	}
 	
 	private void add(EntityType type){
-		//System.out.println(type.toString());
+		System.out.println("Attempting to load " + type.toString());
 		if(allowed.contains(type.toString())){
 			types.add(type);
-			//System.out.println(":)");
+			System.out.println("Added");
+		}else{
+			System.out.println("Entity type not allowed");
 		}
 	}
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
+		//Reload command
 		loadStuff();
 		sender.sendMessage(ChatColor.GREEN + "CONFIG RELOADED!");
 		return true;
